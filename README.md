@@ -44,7 +44,6 @@
 1. `rimraf`:"删除文件目录"
 1. `co`:"用同步的方式编写异步编程"
 1. `co-prompt`:"终端用户输入"
-1. `log-symbols`:"可以在终端显示√或者x的图标"
 1. `read-metadata`:"用于读取json或者yaml元数据文件并返回一个对象"
 1. `multimatch`:"可以支持多个条件的匹配"
 1. `yargs`:"处理命令行参数"
@@ -59,7 +58,6 @@
 1. `handlebars`:"模板引擎，将用户提交的信息动态填充到文件中{{name}}"
 1. `user-home`:"获取用户的根目录"
 1. `download`:"下载并解压文件 =>  github.com/kevva/download/"
-1. `ora`:"终端实现loading效果"
 1. `download-git-repo`:"下载远程仓库至本地，支持github，gitlab，bitbucket"
 1. `metalsmith`:"对下载的文件进行处理,插件化的静态网站生成器"
 1. `Handlebars`:"模板引擎"
@@ -71,6 +69,8 @@
 1. `readline`:"命令行输入的api"
 1. `progress`:"渲染进度"
 1. `shelljs`:"重新包装了 child_process,调用系统命令更加方便。它需要安装后使用"
+1. `ora`:"终端实现loading效果"
+1. `log-symbols`:"各种日志级别的彩色的符号，可以在终端显示√或者x的图标"
 
 ### node相关模块
 
