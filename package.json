@@ -1,0 +1,33 @@
+{
+  "name": "react-cli",
+  "version": "1.0.0",
+  "description": "a react template generator",
+  "main": "index.js",
+  "bin": {
+    "react-cli": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TinkerDeng/react-cli.git"
+  },
+  "author": "652988976@qq.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TinkerDeng/react-cli/issues"
+  },
+  "homepage": "https://github.com/TinkerDeng/react-cli#readme",
+  "devDependencies": {
+    "chalk": "^2.4.1",
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.18.0",
+    "copy-dir": "^0.4.0",
+    "fs": "^0.0.1-security",
+    "inquirer": "^6.2.0",
+    "path": "^0.12.7",
+    "tty-table": "^2.6.8"
+  }
+}
