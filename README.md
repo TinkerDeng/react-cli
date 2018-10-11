@@ -26,8 +26,12 @@
 #### 本地使用
 
 ```git
-    git clone
+    git clone https://github.com/TinkerDeng/react-cli.git
     npm link
+    react-cli list
+    react-cli delete
+    react-cli init
+    react-cli add
     ...
 ```
 
