@@ -6,6 +6,7 @@
     * [本地使用](#本地使用)
 * [相关库](#相关库)
 * [node相关模块](#node相关模块)
+* [模块详解](#模块详解)
 
 ### 简介
 
@@ -44,6 +45,7 @@
 1. `node-cmd`:"操作shell脚本"
 1. `copy-dir`:"将文件或者目录复制到另一个路径,如果不存在，自动创建"
 1. `ncp`:"异步递归文件和目录复制"
+1. `download-git-repo`:"下载远程仓库至本地，支持github，gitlab，bitbucket"
 1. `mkdirp`:"递归创建目录"
 1. `rimraf`:"删除文件目录"
 1. `co`:"用同步的方式编写异步编程"
@@ -59,12 +61,10 @@
 1. `semver`:"语义版本规范，主版本号.次版本号.修订号"
 1. `minimatch`:"glob匹配器"
 1. `async`:"非常强大的异步处理工具"
-1. `handlebars`:"模板引擎，将用户提交的信息动态填充到文件中{{name}}"
+1. `handlebars`:"模板引擎，将用户提交的信息动态填充到文件中"
 1. `user-home`:"获取用户的根目录"
 1. `download`:"下载并解压文件 =>  github.com/kevva/download/"
-1. `download-git-repo`:"下载远程仓库至本地，支持github，gitlab，bitbucket"
 1. `metalsmith`:"对下载的文件进行处理,插件化的静态网站生成器"
-1. `Handlebars`:"模板引擎"
 1. `poi`:"零配置js打包器"
 1. `w7`:"dev server html服务器"
 1. `fs-extra`:"再fs基础上增加了一些新的方法，直接替换fs，更好用"
@@ -84,3 +84,69 @@
 4. `superagent`:""
 5. `child_process`:"创建子进程,执行unix系统命令,比如完成npm install"
 6. `util`:"工具方法"
+
+### 模块详解
+
+#### ora终端实现loading效果
+
+```javascript
+    const ora = require('ora');
+    const spinner = ora('正在下载模板...');
+    spinner.start();//loading中
+    spinner.fail();//下载失败
+    spinner.succeed();//下载成功
+```
+
+#### fs模块API
+
+```javascript
+    const fs=require("fs");
+    const filename="aa/package.json";
+    //xxx文件是否存在
+    fs.existsSync(filename);
+    //写文件，编译文件
+    const meta={name:'11'};
+    const content=fs.readFileSync(filename).toString();//读取文件内容
+    const result= handlebars.compile(content)(meta);
+    fs.writeFileSync(filename,result);//写入文件
+```
+
+#### inquirer
+
+```javascript
+    const inquirer=requier("inquirer")
+    const questions = [{
+    type: "input",
+    name: "projectName",
+    message: "your project name",
+    default: function () {
+        return "aa";
+    },
+    transformer: function (color, answers, flags) {
+        console.log(flags);
+        console.log(111);
+        if (flags.isFinal) {
+            return color + '!';
+        }
+        return color;
+    },
+    validate: function (params) {
+        var pass = value.match(/\d/i);
+        if (pass) {
+            return true;
+        }
+        return "please enter a valid phone number"
+    }
+}];
+```
+
+#### shelljs
+```javascript
+    const shell=require('shelljs');
+    shell.exec("cd "+name+" && npm i",function(err,stdout,stderr){
+        if(err){
+            console.log("install 失败")
+        }
+        console.log('install 成功');
+    });
+```

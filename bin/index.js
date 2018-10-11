@@ -45,7 +45,14 @@ commander
     .action(() => {
         require("../command/move.js")();
     })
-
+commander
+    .command('test <name>') //<name>用于传参
+    .description('测试数据')
+    .alias('m')
+    .action((name)=>{
+        require("../command/test.js")();
+    })
+    
 commander.parse(argv); // commander解析命令行输入的参数
 if (!commander.args.length) {
     commander.help(); // 默认显示帮助信息

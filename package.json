@@ -25,11 +25,13 @@
     "co-prompt": "^1.0.0",
     "commander": "^2.18.0",
     "copy-dir": "^0.4.0",
+    "download-git-repo": "^1.1.0",
     "fs": "^0.0.1-security",
     "inquirer": "^6.2.0",
     "log-symbols": "^2.2.0",
     "ora": "^3.0.0",
     "path": "^0.12.7",
+    "shelljs": "^0.8.2",
     "tty-table": "^2.6.8"
   }
 }
