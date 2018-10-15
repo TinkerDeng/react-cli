@@ -13,10 +13,6 @@ function tableHeader() {
         value: "模板地址",
         width: 50,
         headerAlign: 'center'
-    }, {
-        value: "模板分支",
-        width: 20,
-        headerAlign: 'center'
     }];
 }
 function opts() {
@@ -36,7 +32,7 @@ function tableRender(config) {
     if (keyArr.length > 0) {
         keyArr.forEach((item) => {
             if (item) {
-                newConfig.push([chalk.red(item), config[item].url, config[item].branch]);
+                newConfig.push([chalk.red(item), config[item].url]);
             }
         });
         const t1 = Table(tableHeader(), newConfig, opts());

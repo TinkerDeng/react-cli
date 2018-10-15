@@ -45,7 +45,7 @@
 1. `node-cmd`:"操作shell脚本"
 1. `copy-dir`:"将文件或者目录复制到另一个路径,如果不存在，自动创建"
 1. `ncp`:"异步递归文件和目录复制"
-1. `download-git-repo`:"下载远程仓库至本地，支持github，gitlab，bitbucket"
+1. `ownload-git-repod`:"下载远程仓库至本地，支持github，gitlab，bitbucket"
 1. `mkdirp`:"递归创建目录"
 1. `rimraf`:"删除文件目录"
 1. `co`:"用同步的方式编写异步编程"

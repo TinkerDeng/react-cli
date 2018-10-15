@@ -5,7 +5,7 @@ const argv = process.argv; // 获取命令行参数
 
 commander
     .version(package.version, '-v,--version,-V');
-    
+
 commander
     .command('list')
     .description('模板列表')
@@ -31,28 +31,21 @@ commander
     });
 
 commander
-    .command('init')
+    .command('init <name>') //<name>用于传参
     .description('初始化相关模板')
     .alias('a')
-    .action(() => {
-        require('../command/init.js')();
+    .action((name) => {
+        require('../command/init.js')(name);
     });
 
 commander
-    .command("move")
+    .command('move')
     .description('移动项目模板')
     .alias('m')
     .action(() => {
-        require("../command/move.js")();
-    })
-commander
-    .command('test <name>') //<name>用于传参
-    .description('测试数据')
-    .alias('m')
-    .action((name)=>{
-        require("../command/test.js")();
-    })
-    
+        require('../command/move.js')();
+    });
+
 commander.parse(argv); // commander解析命令行输入的参数
 if (!commander.args.length) {
     commander.help(); // 默认显示帮助信息

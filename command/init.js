@@ -3,64 +3,92 @@ const exec = require('child_process').exec;
 const fs = require('fs');
 const logSymbols = require('log-symbols');
 const ora = require('ora');
-const program = require('commander');
-const co = require('co');
-const prompt = require('co-prompt');
 const config = require('../templates');
 const chalk = require('chalk');
-
-//fs.existsSync("路径");  //判断一个路径是否存在，存在返回true，否则返回false
-// process.cwd() //获取当前文件的路径
-module.exports = () => {
-    co(function* () {
-        // 处理用户输入
-        let tplName = yield prompt('模板名称: ');
-        let projectName = yield prompt('项目名称: ');
-        let gitUrl;
-        let branch;
-         if (!config.tpl[tplName]) {
-             console.log("\n");
-             console.log(logSymbols.warning, chalk.yellow('模板不存在!'));
-             console.log(chalk.blue(`请执行${chalk.white('react-cli list')}查看模板名称`));
-             process.exit();
-         }
-        gitUrl = config.tpl[tplName].url;
-        branch = config.tpl[tplName].branch;
-
-        // git命令，远程拉取项目并自定义项目名
-        let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${branch}`;
-        const spinner = ora({
-            spinner: {
-                "interval": 80,
-                "frames": [
-                    "⠋",
-                    "⠙",
-                    "⠚",
-                    "⠞",
-                    "⠖",
-                    "⠦",
-                    "⠴",
-                    "⠲",
-                    "⠳",
-                    "⠓"
-                ]
-            },
-            text: "开始生成中，请稍等..."
-        });
-        spinner.start();
-        exec(cmdStr, (error, stdout, stderr) => {
-            spinner.stop();
-            if (error) {
-                console.log("\n");
-                console.log(chalk.red('git地址不存在'));
-                console.log(chalk.red('请查看列表GIT地址是否正确'));
-                process.exit();
+const handlebars = require('handlebars');
+const customUtils = require('../utils/utils');
+const inquirer = require('inquirer');
+const symbols = require('log-symbols');
+const shell = require('shelljs');
+const download = require('download-git-repo');
+const spinner = ora({
+    spinner: {
+        'interval': 80,
+        'frames': [
+            '⠋',
+            '⠙',
+            '⠚',
+            '⠞',
+            '⠖',
+            '⠦',
+            '⠴',
+            '⠲',
+            '⠳',
+            '⠓'
+        ]
+    },
+    text: '开始生成中，请稍等...'
+});
+module.exports = (name) => {
+    if (config && config.tpl && config.tpl[name]) {
+        inquirer.prompt(customUtils.question).then((answer) => {
+            const projectName = answer.projectName;
+            if (!fs.existsSync(projectName)) {
+                spinner.start();
+                download(config.tpl[name]['url'], answer.projectName, (err) => {
+                    spinner.stop();
+                    if (err) {
+                        console.log(logSymbols.success, chalk.red('项目下载失败'));
+                        console.log(chalk.red(err));
+                    } else {
+                        const fileName = `${answer.projectName}/package.json`;
+                        const meta = {
+                            name: answer.projectName,
+                            description: answer.description,
+                            author: answer.author
+                        };
+                        if (fs.existsSync(fileName)) {
+                            const content = fs.readFileSync(fileName).toString();
+                            const result = handlebars.compile(content)(meta);
+                            fs.writeFileSync(fileName, result);
+                        }
+                        if (answer.ifInstall && answer.installWay === 'npm') {
+                            let spinner = ora('Installing...');
+                            spinner.start();
+                            shell.exec('cd ' + answer.projectName + ' && cnpm i', function (err, stdout, stderr) {
+                                if (err) {
+                                    console.log(logSymbols.success, chalk.red('项目下载失败'));
+                                }
+                                else {
+                                    console.log(logSymbols.success, '项目下载成功ly!');
+                                    console.log(chalk.red('请查看readme.md文件查看帮助文档'));
+                                }
+                            });
+                        } else if (answer.ifInstall && answer.installWay === 'cnpm') {
+                            let spinner = ora('Installing...');
+                            spinner.start();
+                            shell.exec('cd ' + answer.projectName + ' && cnpm i', function (err, stdout, stderr) {
+                                if (err) {
+                                    console.log(logSymbols.success, chalk.red('项目下载失败'));
+                                }
+                                else {
+                                    console.log(logSymbols.success, '项目下载成功ly!');
+                                    console.log(chalk.red('请查看readme.md文件查看帮助文档'));
+                                }
+                            });
+                        } else {
+                            console.log(logSymbols.success, '项目下载成功ly!');
+                            console.log(chalk.red('请查看readme.md文件查看帮助文档'));
+                        }
+                    }
+                });
+            } else {
+                console.log('项目名称已经存在，请换个名称');
             }
-            console.log("\n");
-            console.log(logSymbols.success,chalk.green('项目生成成功'));
-            console.log("\n");
-            console.log(`请执行cd ${projectName} && npm install \n`);
-            process.exit();
         });
-    });
+    } else {
+        console.log(chalk.red('模板名称不存在'));
+        console.log(chalk.red(`请执行 react-cli list 查看模板列表`));
+        process.exit();
+    }
 };
