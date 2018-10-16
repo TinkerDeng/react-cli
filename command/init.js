@@ -1,5 +1,4 @@
 'use strict';
-const exec = require('child_process').exec;
 const fs = require('fs');
 const logSymbols = require('log-symbols');
 const ora = require('ora');
@@ -8,7 +7,6 @@ const chalk = require('chalk');
 const handlebars = require('handlebars');
 const customUtils = require('../utils/utils');
 const inquirer = require('inquirer');
-const symbols = require('log-symbols');
 const shell = require('shelljs');
 const download = require('download-git-repo');
 const spinner = ora({
@@ -29,6 +27,7 @@ const spinner = ora({
     },
     text: '开始生成中，请稍等...'
 });
+
 module.exports = (name) => {
     if (config && config.tpl && config.tpl[name]) {
         inquirer.prompt(customUtils.question).then((answer) => {

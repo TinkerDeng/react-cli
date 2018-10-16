@@ -75,6 +75,8 @@
 1. `shelljs`:"重新包装了 child_process,调用系统命令更加方便。它需要安装后使用"
 1. `ora`:"终端实现loading效果"
 1. `log-symbols`:"各种日志级别的彩色的符号，可以在终端显示√或者x的图标"
+1. `bluebird`:""
+1. `logger `:"自定义工具-用于日志打印"
 
 ### node相关模块
 
